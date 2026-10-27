@@ -30,7 +30,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install Gradle 8.7
+      - name: Install Gradle 8.9
         shell: bash
         run: |
           set -euo pipefail
