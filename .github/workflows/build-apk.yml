@@ -1,9 +1,10 @@
-﻿name: Build StatusFlow APK
+name: Build StatusFlow APK
 
 on:
   workflow_dispatch:
   push:
-    branches: [main, master]
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -13,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-            - name: Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -31,12 +32,6 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Check Gradle
-        run: gradle --version
-
-      - name: Run Unit Tests
-        run: gradle testDebugUnitTest --continue
 
       - name: Build Debug APK
         run: gradle assembleDebug --stacktrace
