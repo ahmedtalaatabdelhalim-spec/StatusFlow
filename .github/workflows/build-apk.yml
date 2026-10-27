@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -26,7 +30,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Download Gradle 8.7
+      - name: Install Gradle 8.7
         shell: bash
         run: |
           set -euo pipefail
@@ -35,10 +39,20 @@ jobs:
           echo "/tmp/gradle-8.7/bin" >> "$GITHUB_PATH"
           /tmp/gradle-8.7/bin/gradle --version
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          cmdline-tools-version: '12266719'
+      - name: Configure Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -f "$SDKMANAGER" ]; then
+            SDKMANAGER="$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
+          fi
+          if [ ! -f "$SDKMANAGER" ]; then
+            echo "Android SDK sdkmanager was not found."
+            exit 1
+          fi
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses || true
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Build Debug APK
         run: gradle --no-daemon assembleDebug --stacktrace
