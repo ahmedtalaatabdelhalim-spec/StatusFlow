@@ -1,6 +1,7 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.StatusFlow" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@android:color/holo_blue_dark</item>
+    <style name="Theme.StatusFlow" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorAccent">#1565C0</item>
     </style>
 </resources>
