@@ -34,10 +34,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /tmp/gradle.zip
+          wget -q https://services.gradle.org/distributions/gradle-8.9-bin.zip -O /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d /tmp
-          echo "/tmp/gradle-8.7/bin" >> "$GITHUB_PATH"
-          /tmp/gradle-8.7/bin/gradle --version
+          echo "/tmp/gradle-8.9/bin" >> "$GITHUB_PATH"
+          /tmp/gradle-8.9/bin/gradle --version
 
       - name: Configure Android SDK
         shell: bash
