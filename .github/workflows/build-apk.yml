@@ -35,8 +35,10 @@ jobs:
           echo "/tmp/gradle-8.7/bin" >> "$GITHUB_PATH"
           /tmp/gradle-8.7/bin/gradle --version
 
-      - name: Set up Android SDK
+            - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: '12266719'
 
       - name: Build Debug APK
         run: gradle --no-daemon assembleDebug --stacktrace
